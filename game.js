@@ -115,7 +115,7 @@ function clearLines() {
   if (cleared) {
     lines += cleared;
     score += (LINE_SCORES[cleared] || 0) * level;
-    level = Math.floor(lines / 10) + 1;
+    level = startLevel + Math.floor(lines / 10);
     dropInterval = Math.max(100, 1000 - (level - 1) * 90);
     updateHUD();
   }
@@ -321,9 +321,9 @@ startLevelSelect.addEventListener('change', e => {
   localStorage.setItem('tetris-start-level', String(startLevel));
 });
 
-const savedStartLevel = localStorage.getItem('tetris-start-level');
-if (savedStartLevel) {
-  startLevel = parseInt(savedStartLevel, 10);
+const savedStartLevel = parseInt(localStorage.getItem('tetris-start-level'), 10);
+if (savedStartLevel >= 1 && savedStartLevel <= 10) {
+  startLevel = savedStartLevel;
   startLevelSelect.value = String(startLevel);
 }
 
